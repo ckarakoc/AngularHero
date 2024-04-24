@@ -1,4 +1,4 @@
-import { Component, inject, Inject } from '@angular/core';
+import { Component, inject, Inject, OnInit } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
@@ -6,6 +6,7 @@ import { HeroService } from "../hero.service";
 import { Hero } from "../core/models/hero";
 import { HeroDetailComponent } from "../hero-detail/hero-detail.component";
 import { MessageService } from "../message.service";
+import { RouterLink } from "@angular/router";
 
 @Component({
   standalone: true,
@@ -15,10 +16,27 @@ import { MessageService } from "../message.service";
   imports: [
     CommonModule,
     FormsModule,
-    HeroDetailComponent
+    HeroDetailComponent,
+    RouterLink
   ],
 })
-export class HeroesComponent {
+export class HeroesComponent implements OnInit {
+  heroes: Hero[] = [];
+
+  constructor(private heroService: HeroService) {
+  }
+
+  ngOnInit(): void {
+    this.getHeroes();
+  }
+
+  getHeroes(): void {
+    this.heroService.getHeroes()
+      .subscribe(heroes => this.heroes = heroes);
+  }
+}
+
+/*export class HeroesComponent {
   heroes: Hero[] = [];
   // heroService: HeroService = inject(HeroService);
   selectedHero?: Hero;
@@ -32,12 +50,12 @@ export class HeroesComponent {
     this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
   }
 
-  /*hero: Hero = {
+  /!*hero: Hero = {
     id: 1,
     name: 'Windstorm'
-  }*/
+  }*!/
   onSelect(hero: Hero) {
     this.selectedHero = hero;
     this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
   }
-}
+}*/
