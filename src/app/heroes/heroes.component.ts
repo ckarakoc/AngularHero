@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { CommonModule } from "@angular/common";
-
-import { HEROES } from "../mock-heroes";
-import { Hero } from "../core/models/hero";
 import { FormsModule } from "@angular/forms";
+
+import { HeroService } from "../hero.service";
+import { Hero } from "../core/models/hero";
+import { HeroDetailComponent } from "../hero-detail/hero-detail.component";
+import { MessageService } from "../message.service";
 
 @Component({
   standalone: true,
@@ -12,15 +14,22 @@ import { FormsModule } from "@angular/forms";
   styleUrl: './heroes.component.css',
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    HeroDetailComponent
   ],
 })
 export class HeroesComponent {
-  heroes: Hero[] = HEROES;
-  selectedHero? : Hero;
+  heroes: Hero[] = [];
+  // heroService: HeroService = inject(HeroService);
+  selectedHero?: Hero;
 
-  constructor() {
-    this.selectedHero = this.heroes[0];
+  constructor(private heroService: HeroService, private messageService: MessageService) {
+    // this.selectedHero = this.heroes[0]; // doesn't do anything when async-await is used
+  }
+
+  ngOnInit() {
+    // this.heroes = this.heroService.getHeroes();//.then(heroes => this.heroes = heroes);
+    this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
   }
 
   /*hero: Hero = {
@@ -29,5 +38,6 @@ export class HeroesComponent {
   }*/
   onSelect(hero: Hero) {
     this.selectedHero = hero;
+    this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
   }
 }
