@@ -7,17 +7,19 @@ import { AppComponent } from './app.component';
 import { HeroesComponent } from "./heroes/heroes.component";
 
 @NgModule({
-  declarations: [
+  declarations: [ //private
     AppComponent,
-    HeroesComponent
+    // HeroesComponent
   ],
-  imports: [
+  imports: [ // import
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HeroesComponent
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [], // injectables, DI
+  bootstrap: [AppComponent], //
+  exports: [], // publics
 })
 export class AppModule {
 }
