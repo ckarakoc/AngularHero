@@ -11,10 +11,11 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InMemoryDataService } from './in-memory-data.service';
+import { HeroSearchComponent } from './hero-search/hero-search.component';
 
 @NgModule({
   declarations: [ //private
-    AppComponent, DashboardComponent,
+    AppComponent, DashboardComponent, HeroSearchComponent,
     // MessagesComponent,
     // HeroDetailComponent,
     // HeroesComponent,
